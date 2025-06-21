@@ -16,23 +16,23 @@ const StudentDashboard: React.FC = () => {
   const [showJoinGroup, setShowJoinGroup] = useState(false);
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
 
-  // Mock data
+  // Mock data - only English tests
   const availableTests: Test[] = [
     {
       id: '1',
-      title: 'Matemáticas Básicas',
-      description: 'Evaluación de conceptos fundamentales',
+      title: 'Inglés Básico 1',
+      description: 'Fundamentos del idioma inglés - Nivel principiante',
       questions: [
         {
           id: '1',
-          question: '¿Cuánto es 2 + 2?',
-          options: ['3', '4', '5', '6'],
+          question: 'What is the correct translation of "Hola" in English?',
+          options: ['Goodbye', 'Hello', 'Thank you', 'Please'],
           correctAnswer: 1
         },
         {
           id: '2',
-          question: '¿Cuál es la raíz cuadrada de 16?',
-          options: ['2', '4', '6', '8'],
+          question: 'How do you say "¿Cómo estás?" in English?',
+          options: ['What is your name?', 'How are you?', 'Where are you from?', 'How old are you?'],
           correctAnswer: 1
         }
       ],
@@ -41,9 +41,22 @@ const StudentDashboard: React.FC = () => {
     },
     {
       id: '2',
-      title: 'Historia Mundial',
-      description: 'Primera Guerra Mundial',
-      questions: [],
+      title: 'Inglés Básico 2',
+      description: 'Inglés elemental - Vocabulario y gramática básica',
+      questions: [
+        {
+          id: '3',
+          question: 'What is the plural form of "book"?',
+          options: ['book', 'books', 'bookes', 'bookies'],
+          correctAnswer: 1
+        },
+        {
+          id: '4',
+          question: 'Choose the correct sentence:',
+          options: ['I am have a car', 'I have a car', 'I has a car', 'I am has a car'],
+          correctAnswer: 1
+        }
+      ],
       createdBy: 'teacher1',
       createdAt: new Date(),
     },
@@ -52,8 +65,8 @@ const StudentDashboard: React.FC = () => {
   const myGroups: StudyGroup[] = [
     {
       id: '1',
-      name: 'Grupo de Matemáticas',
-      description: 'Estudiamos álgebra y geometría',
+      name: 'Grupo de Inglés',
+      description: 'Estudiamos vocabulario y gramática inglesa',
       createdBy: 'student1',
       members: ['student1', 'student2', 'student3'],
       createdAt: new Date(),

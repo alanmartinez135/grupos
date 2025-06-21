@@ -13,20 +13,20 @@ const TeacherDashboard: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
 
-  // Mock data
+  // Mock data - only English tests
   const tests: Test[] = [
     {
       id: '1',
-      title: 'Matemáticas Básicas',
-      description: 'Evaluación de conceptos fundamentales',
+      title: 'Inglés Básico 1',
+      description: 'Fundamentos del idioma inglés - Nivel principiante',
       questions: [],
       createdBy: 'teacher1',
       createdAt: new Date(),
     },
     {
       id: '2',
-      title: 'Historia Mundial',
-      description: 'Primera Guerra Mundial',
+      title: 'Inglés Básico 2',
+      description: 'Inglés elemental - Vocabulario y gramática básica',
       questions: [],
       createdBy: 'teacher1',
       createdAt: new Date(),
