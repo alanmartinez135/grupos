@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import { Plus, FileText, Users, BarChart } from 'lucide-react';
 import CreateTestModal from '@/components/tests/CreateTestModal';
 import TestResultsModal from '@/components/tests/TestResultsModal';
 import { Test, TestResult } from '@/types';
+import { toast } from '@/hooks/use-toast';
 
 const TeacherDashboard: React.FC = () => {
   const [showCreateTest, setShowCreateTest] = useState(false);
@@ -14,7 +16,7 @@ const TeacherDashboard: React.FC = () => {
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
 
   // Mock data - only English tests
-  const tests: Test[] = [
+  const [tests, setTests] = useState<Test[]>([
     {
       id: '1',
       title: 'Inglés Básico 1',
@@ -22,6 +24,7 @@ const TeacherDashboard: React.FC = () => {
       questions: [],
       createdBy: 'teacher1',
       createdAt: new Date(),
+      isEnabled: true,
     },
     {
       id: '2',
@@ -30,8 +33,9 @@ const TeacherDashboard: React.FC = () => {
       questions: [],
       createdBy: 'teacher1',
       createdAt: new Date(),
+      isEnabled: true,
     },
-  ];
+  ]);
 
   const mockResults: TestResult[] = [
     { id: '1', testId: '1', studentId: 'student1', score: 85, totalQuestions: 10, answers: [], completedAt: new Date() },
@@ -41,6 +45,20 @@ const TeacherDashboard: React.FC = () => {
   const handleViewResults = (test: Test) => {
     setSelectedTest(test);
     setShowResults(true);
+  };
+
+  const handleToggleTest = (testId: string, enabled: boolean) => {
+    setTests(prevTests => 
+      prevTests.map(test => 
+        test.id === testId ? { ...test, isEnabled: enabled } : test
+      )
+    );
+    
+    const test = tests.find(t => t.id === testId);
+    toast({
+      title: enabled ? "Prueba habilitada" : "Prueba deshabilitada",
+      description: `La prueba "${test?.title}" ha sido ${enabled ? 'habilitada' : 'deshabilitada'}`,
+    });
   };
 
   return (
@@ -103,7 +121,12 @@ const TeacherDashboard: React.FC = () => {
             {tests.map((test) => (
               <div key={test.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg gap-4">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{test.title}</h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="font-semibold text-lg">{test.title}</h3>
+                    <Badge variant={test.isEnabled ? "default" : "secondary"}>
+                      {test.isEnabled ? "Habilitada" : "Deshabilitada"}
+                    </Badge>
+                  </div>
                   <p className="text-gray-600 text-sm">{test.description}</p>
                   <div className="flex items-center gap-2 mt-2">
                     <Badge variant="secondary">
@@ -114,7 +137,16 @@ const TeacherDashboard: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-start sm:items-center">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      checked={test.isEnabled}
+                      onCheckedChange={(checked) => handleToggleTest(test.id, checked)}
+                    />
+                    <span className="text-sm text-gray-600">
+                      {test.isEnabled ? "Habilitada" : "Deshabilitada"}
+                    </span>
+                  </div>
                   <Button 
                     variant="outline" 
                     size="sm"

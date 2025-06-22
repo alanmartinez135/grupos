@@ -22,6 +22,7 @@ export interface Test {
   createdBy: string;
   createdAt: Date;
   timeLimit?: number;
+  isEnabled?: boolean;
 }
 
 export interface TestResult {
