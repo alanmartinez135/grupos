@@ -1,18 +1,19 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
-import { Plus, FileText, Users, BarChart } from 'lucide-react';
+import { Plus, FileText, Users, BarChart, Settings } from 'lucide-react';
 import CreateTestModal from '@/components/tests/CreateTestModal';
 import TestResultsModal from '@/components/tests/TestResultsModal';
+import ManageGroupsModal from '@/components/groups/ManageGroupsModal';
 import { Test, TestResult } from '@/types';
 import { toast } from '@/hooks/use-toast';
 
 const TeacherDashboard: React.FC = () => {
   const [showCreateTest, setShowCreateTest] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showManageGroups, setShowManageGroups] = useState(false);
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
 
   // Mock data - only English tests
@@ -68,14 +69,24 @@ const TeacherDashboard: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900">Panel de Profesor</h2>
           <p className="text-gray-600">Gestiona tus pruebas y revisa el progreso de tus estudiantes</p>
         </div>
-        <Button onClick={() => setShowCreateTest(true)} className="w-full sm:w-auto">
-          <Plus className="h-4 w-4 mr-2" />
-          Crear Nueva Prueba
-        </Button>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button onClick={() => setShowCreateTest(true)} className="flex-1 sm:flex-none">
+            <Plus className="h-4 w-4 mr-2" />
+            Crear Nueva Prueba
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={() => setShowManageGroups(true)}
+            className="flex-1 sm:flex-none"
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            Gestionar Grupos
+          </Button>
+        </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pruebas Creadas</CardTitle>
@@ -95,6 +106,17 @@ const TeacherDashboard: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-bold">24</div>
             <p className="text-xs text-muted-foreground">+3 esta semana</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Grupos Activos</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">+1 esta semana</p>
           </CardContent>
         </Card>
 
@@ -175,6 +197,11 @@ const TeacherDashboard: React.FC = () => {
           results={mockResults.filter(r => r.testId === selectedTest.id)}
         />
       )}
+
+      <ManageGroupsModal
+        open={showManageGroups}
+        onOpenChange={setShowManageGroups}
+      />
     </div>
   );
 };

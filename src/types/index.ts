@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   email: string;
@@ -42,6 +41,7 @@ export interface StudyGroup {
   createdBy: string;
   members: string[];
   createdAt: Date;
+  isEnabled?: boolean;
 }
 
 export interface AuthContextType {
