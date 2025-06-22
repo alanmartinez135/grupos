@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -19,28 +18,28 @@ const JoinGroupModal: React.FC<JoinGroupModalProps> = ({ open, onOpenChange }) =
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Mock available groups
+  // Mock available groups - only English groups
   const availableGroups: StudyGroup[] = [
     {
       id: '2',
-      name: 'Historia Avanzada',
-      description: 'Estudiamos historia moderna y contemporánea',
+      name: 'Inglés Avanzado',
+      description: 'Estudiamos inglés avanzado y conversación',
       createdBy: 'student2',
       members: ['student2', 'student3'],
       createdAt: new Date(),
     },
     {
       id: '3',
-      name: 'Ciencias Naturales',
-      description: 'Biología, química y física',
+      name: 'Inglés Básico - Principiantes',
+      description: 'Grupo para estudiantes que comienzan con inglés',
       createdBy: 'student4',
       members: ['student4', 'student5', 'student6'],
       createdAt: new Date(),
     },
     {
       id: '4',
-      name: 'Programación Básica',
-      description: 'Aprendemos los fundamentos de la programación',
+      name: 'Inglés Conversacional',
+      description: 'Practicamos speaking y listening en inglés',
       createdBy: 'student7',
       members: ['student7'],
       createdAt: new Date(),
