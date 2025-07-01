@@ -1,3 +1,4 @@
+
 export interface User {
   id: string;
   email: string;
@@ -34,6 +35,21 @@ export interface TestResult {
   completedAt: Date;
 }
 
+export interface ChatMessage {
+  id: string;
+  groupId: string;
+  userId: string;
+  userName: string;
+  message: string;
+  timestamp: Date;
+}
+
+export interface MeetingInfo {
+  location: string;
+  schedule: string;
+  description?: string;
+}
+
 export interface StudyGroup {
   id: string;
   name: string;
@@ -42,6 +58,7 @@ export interface StudyGroup {
   members: string[];
   createdAt: Date;
   isEnabled?: boolean;
+  meetingInfo?: MeetingInfo;
 }
 
 export interface AuthContextType {

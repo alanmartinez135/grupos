@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,13 +7,16 @@ import { BookOpen, Users, Trophy, Plus } from 'lucide-react';
 import TakeTestModal from '@/components/tests/TakeTestModal';
 import CreateGroupModal from '@/components/groups/CreateGroupModal';
 import JoinGroupModal from '@/components/groups/JoinGroupModal';
+import GroupDetailsModal from '@/components/groups/GroupDetailsModal';
 import { Test, StudyGroup } from '@/types';
 
 const StudentDashboard: React.FC = () => {
   const [showTakeTest, setShowTakeTest] = useState(false);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [showJoinGroup, setShowJoinGroup] = useState(false);
+  const [showGroupDetails, setShowGroupDetails] = useState(false);
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<StudyGroup | null>(null);
 
   // Mock data - only English tests
   const availableTests: Test[] = [
@@ -70,6 +72,11 @@ const StudentDashboard: React.FC = () => {
       createdBy: 'student1',
       members: ['student1', 'student2', 'student3'],
       createdAt: new Date(),
+      meetingInfo: {
+        location: 'Biblioteca Central - Sala 204',
+        schedule: 'Miércoles 4:00 PM - 6:00 PM',
+        description: 'Sesiones de práctica de conversación en inglés'
+      }
     },
   ];
 
@@ -80,6 +87,11 @@ const StudentDashboard: React.FC = () => {
   const handleTakeTest = (test: Test) => {
     setSelectedTest(test);
     setShowTakeTest(true);
+  };
+
+  const handleViewGroup = (group: StudyGroup) => {
+    setSelectedGroup(group);
+    setShowGroupDetails(true);
   };
 
   return (
@@ -184,7 +196,11 @@ const StudentDashboard: React.FC = () => {
                     <Badge variant="secondary">
                       {group.members.length} miembros
                     </Badge>
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleViewGroup(group)}
+                    >
                       Ver Grupo
                     </Button>
                   </div>
@@ -212,6 +228,14 @@ const StudentDashboard: React.FC = () => {
         open={showJoinGroup}
         onOpenChange={setShowJoinGroup}
       />
+
+      {selectedGroup && (
+        <GroupDetailsModal
+          open={showGroupDetails}
+          onOpenChange={setShowGroupDetails}
+          group={selectedGroup}
+        />
+      )}
     </div>
   );
 };
